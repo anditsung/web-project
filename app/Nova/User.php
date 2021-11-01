@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphToMany;
@@ -64,12 +65,15 @@ class User extends Resource
                 ->creationRules('required', 'string', 'min:8')
                 ->updateRules('nullable', 'string', 'min:8'),
 
+            Boolean::make(__('Admin'), 'is_admin')
+                ->default(false),
+
             /** RELATION */
 
             MorphToMany::make(__('Roles'), 'roles', Role::class ),
 
-            MorphToMany::make(__('Permissions'), 'permissions', Permission::class)
-                ->searchable(),
+//            MorphToMany::make(__('Permissions'), 'permissions', Permission::class)
+//                ->searchable(),
         ];
     }
 

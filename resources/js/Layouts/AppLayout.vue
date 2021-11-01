@@ -34,8 +34,8 @@
 
 <script>
     import JetBanner from '@/Jetstream/Banner'
-    import PrimaryNavigationMenu from "@/Layouts/PrimaryNavigationMenu";
-    import ResponsiveNavigationMenu from "@/Layouts/ResponsiveNavigationMenu";
+    import PrimaryNavigationMenu from "@/Layouts/Partials/PrimaryNavigationMenu";
+    import ResponsiveNavigationMenu from "@/Layouts/Partials/ResponsiveNavigationMenu";
     import { Head, Link } from '@inertiajs/inertia-vue'
 
     export default {

@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -61,13 +62,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function admin()
-    {
-        return $this->hasRole('admin');
-    }
-
     public function getPermissionArray()
     {
+        if ($this->is_admin) {
+            return Permission::all()->mapWithKeys(function ($perm) {
+                return [$perm['name'] => true];
+            });
+        }
         return $this->getAllPermissions()->mapWithKeys(function ($perm) {
             return [$perm['name'] => true];
         });

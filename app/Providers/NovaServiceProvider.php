@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Laravel\Nova\Panel;
+use OptimistDigital\NovaSettings\NovaSettings;
+use KABBOUCHI\LogsTool\LogsTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -17,6 +23,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        NovaSettings::addSettingsFields([
+            Panel::make('Site', [
+                Text::make(__('Name')),
+
+                Image::make(__('Logo'))
+                    ->prunable(),
+            ]),
+        ]);
     }
 
     /**
@@ -42,9 +57,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            if ($user->can('viewNova')) {
+                return true;
+            }
         });
     }
 
@@ -77,7 +92,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            // https://github.com/optimistdigital/nova-settings
+            (new NovaSettings)->canSee(function () {
+                if (Auth::user()->can('viewSettings')) {
+                    return true;
+                }
+            }),
+            // https://github.com/KABBOUCHI/nova-logs-tool
+            (new LogsTool)->canSee(function () {
+                if (Auth::user()->can('ViewNovaLogs')) {
+                    return true;
+                }
+            }),
+        ];
     }
 
     /**

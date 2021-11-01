@@ -42,15 +42,12 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'app' => [
-                'name' => config('app.name'),
-                'showToken' => false,
+                'name' => nova_get_setting('name', config('web.name')),
+                'logo' => $this->getApplicationLogo(),
+                'showToken' => config('web.show_token'),
             ],
             'admin' => function () use ($request) {
                 if (! $request->user() ) {
-                    return;
-                }
-
-                if (! $request->user()->hasPermissionTo('viewNova') && ! $request->user()->admin() ) {
                     return;
                 }
 
@@ -82,6 +79,15 @@ class HandleInertiaRequests extends Middleware
             ],
             'flash' => $this->getFlashMessage($request),
         ]);
+    }
+
+    private function getApplicationLogo()
+    {
+        $novaLogo = nova_get_setting('logo');
+        if ($novaLogo) {
+            return "storage/{$novaLogo}";
+        }
+        return config('web.logo');
     }
 
     private function getFlashMessage(Request $request)
