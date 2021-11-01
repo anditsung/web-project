@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-16 ">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
@@ -98,7 +98,7 @@
                                 Manage Account
                             </div>
 
-                            <jet-dropdown-link v-if="$page.props.admin || $page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
+                            <jet-dropdown-link v-if="$page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
                                 {{ $page.props.admin.name }}
                             </jet-dropdown-link>
 
