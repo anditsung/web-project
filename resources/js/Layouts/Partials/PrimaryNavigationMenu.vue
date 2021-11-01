@@ -98,7 +98,7 @@
                                 Manage Account
                             </div>
 
-                            <jet-dropdown-link v-if="$page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
+                            <jet-dropdown-link v-if="$page.props.user.is_admin || $page.props.user.can['viewNova']" :href="$page.props.admin.url" as="a">
                                 {{ $page.props.admin.name }}
                             </jet-dropdown-link>
 

@@ -32,11 +32,11 @@
 
                                 <template #content>
 
-                                    <jet-dropdown-link :href="route('dashboard')" as="a">
+                                    <jet-dropdown-link v-if="$page.props.user.is_admin || $page.props.user.can['viewDashboard']" :href="route('dashboard')" as="a">
                                         Dashboard
                                     </jet-dropdown-link>
 
-                                    <jet-dropdown-link v-if="$page.props.user.can['viewNova']" href="/nova/dashboards/main" as="a">
+                                    <jet-dropdown-link v-if="$page.props.user.is_admin || $page.props.user.can['viewNova']" href="/nova/dashboards/main" as="a">
                                         Admin
                                     </jet-dropdown-link>
 

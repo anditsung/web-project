@@ -62,7 +62,7 @@ class HandleInertiaRequests extends Middleware
                 }
 
                 return array_merge(
-                    $request->user()->only('name', 'email'),
+                    $request->user()->only('name', 'email', 'is_admin'),
                     [
                         'two_factor_enabled' => ! is_null($request->user()->two_factor_secret),
                     ],
