@@ -85,7 +85,7 @@ class HandleInertiaRequests extends Middleware
     {
         $novaLogo = nova_get_setting('logo');
         if ($novaLogo) {
-            return "storage/{$novaLogo}";
+            return "/storage/{$novaLogo}";
         }
         return config('web.logo');
     }
